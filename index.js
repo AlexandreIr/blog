@@ -1,11 +1,20 @@
 const express = require('express');
 const app = express();
-const port = 8079;
+const bodyParser = require('body-parser');
+
+const port = 8080;
+
+app.set('view engine', 'ejs');
+
+app.use(express.static('public'));
+
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
 
 app.get('/', (req, res)=>{
-    res.send('<h1>Olá mundo</h1>');
+    res.render('index');
 });
 
 app.listen(port, ()=>{
-    console.log(`Servidor rodando em ${port}`);
+    console.log(`Servidor rodando na porta ${port}`);
 });
