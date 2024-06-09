@@ -3,6 +3,12 @@ const app = express();
 const bodyParser = require('body-parser');
 const connection = require('./db/db');
 
+const CategoryController = require('./categories/CategoryController');
+const ArticleController = require('./articles/ArticleController');
+
+const Category = require('./categories/Category');
+const Article = require('./articles/Article');
+
 const port = 8080;
 
 app.set('view engine', 'ejs');
@@ -17,6 +23,9 @@ connection.authenticate().then(()=>{
 }).catch(error=>{
     console.log(error);
 })
+
+app.use('/', CategoryController);
+app.use('/', ArticleController);
 
 app.get('/', (req, res)=>{
     res.render('index');
