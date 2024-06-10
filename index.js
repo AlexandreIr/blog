@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 connection.authenticate().then(()=>{
-    console.log('Conhexão realizada com sucesso!');
+    console.log('Conexão realizada com sucesso!');
 }).catch(error=>{
     console.log(error);
 })
