@@ -3,6 +3,7 @@ const router = express.Router();
 const category = require('./Category');
 const slugify = require('slugify');
 const { raw } = require('body-parser');
+const { where } = require('sequelize');
 
 router.get('/admin/categories/new', (req, res)=>{
     res.render('./admin/categories/new');
@@ -27,6 +28,25 @@ router.get('/categories', (req, res)=>{
             categories:cat
         });
     });
+});
+
+router.post('/categories/delete/',(req, res)=>{
+    const id = req.body.id;
+    if(id!=null){
+        if(!isNaN(id)){
+            category.destroy({
+                where:{
+                    id:id
+                }
+            }).then(()=>{
+                res.redirect('/categories');
+            });
+        } else{
+            res.redirect('/categories');
+        }
+    }else {
+        res.redirect('/categories');
+    }
 });
 
 module.exports = router;
