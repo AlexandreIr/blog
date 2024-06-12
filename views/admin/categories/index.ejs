@@ -1,6 +1,6 @@
 <%- include('../../partials/header.ejs'); %>
 <body>
-    <%- include('../../partials/navbar') %>
+    <%- include('../../partials/navbar.ejs') %>
     <div class="container">
         <br>
         <h2>Categorias</h2>
@@ -22,7 +22,7 @@
                     <th><%= category.title %></th>
                     <th><%= category.slug %></th>
                     <th>
-                        <button class="btn btn-warning">Editar</button>
+                        <a href="/categories/edit/<%= category.id %>" class="btn btn-warning">Editar</a>
                         <form action="/categories/delete" method="post" style="display: inline;" onsubmit="deleteConf(event, this)">
                             <input type="hidden" value="<%= category.id %>" name="id">
                             <button class="btn btn-danger">Deletar</button>
