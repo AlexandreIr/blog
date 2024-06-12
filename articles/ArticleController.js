@@ -6,7 +6,8 @@ router.get('/articles', (req, res)=>[
 ]);
 
 router.get('/admin/article/new', (req, res)=>{
-    res.send('<h1>Criar novo artigo</h1>')
+    res.render('/admin/articles/new');
 });
+
 
 module.exports = router;
