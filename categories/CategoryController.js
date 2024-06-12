@@ -58,15 +58,16 @@ router.get('/categories/edit/:id', (req, res)=>{
     category.findByPk(id).then(cat=>{
         if(cat!=null){
             res.render('admin/categories/edit', {categ:cat});
-        } 
-        res.redirect('/categories');
+        } else{
+            res.redirect('/categories');
+        }
     }).catch(error=>{
         res.redirect('/categories');
     })
 });
 
-router.post('/categories/update',(req, res)=>{
-    const id = req.body.id;
+router.post('/categories/edit/:id',(req, res)=>{
+    const id = req.params.id;
     const title = req.body.title;
     Category.update({title:title, slug:slugify(title)}, {
         where:{
