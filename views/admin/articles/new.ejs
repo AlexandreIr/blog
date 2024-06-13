@@ -15,7 +15,7 @@
                     <label for="category">Categoria do post</label>
                     <input type="text" id="cat" name="cat" placeholder="Categoria" class="form-control">
                     <label for="body">Corpo do post</label>
-                    <textarea class="form-control" name="body" id="body" placeholder="Escreva seu artigo..." rows="4"></textarea>
+                    <textarea class="form-control" name="body" id="article" placeholder="Escreva seu artigo..." rows="3"></textarea>
                     <br>
                     <button class="btn btn-success">Salvar artigo</button>
                 </form>
@@ -24,3 +24,13 @@
     </div>
 </body>
 <%- include('../../partials/footer') %>
+
+<script src="/tinymce/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        selector:"#article",
+        plugins: 
+            'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons',
+        toolbar: 'emoticons'
+    });
+</script>
