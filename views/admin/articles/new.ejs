@@ -8,8 +8,19 @@
                 <h1>Criação de artigo</h1>
             </div>
             <div class="card-body">
-                
+                <form action="" method="post">
+                    <label for="title">Título</label>
+                    <input type="text" id="title" name="title" placeholder="Título do artigo" class="form-control">
+                    <br>
+                    <label for="category">Categoria do post</label>
+                    <input type="text" id="cat" name="cat" placeholder="Categoria" class="form-control">
+                    <label for="body">Corpo do post</label>
+                    <textarea class="form-control" name="body" id="body" placeholder="Escreva seu artigo..." rows="4"></textarea>
+                    <br>
+                    <button class="btn btn-success">Salvar artigo</button>
+                </form>
             </div>
         </div>
     </div>
 </body>
+<%- include('../../partials/footer') %>
