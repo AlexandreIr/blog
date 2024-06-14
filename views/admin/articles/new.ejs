@@ -12,8 +12,13 @@
                     <label for="title">Título</label>
                     <input type="text" id="title" name="title" placeholder="Título do artigo" class="form-control">
                     <br>
-                    <label for="category">Categoria do post</label>
-                    <input type="text" id="cat" name="cat" placeholder="Categoria" class="form-control">
+                    <label for="categ">Categoria do post</label>
+                    <select name="category" id="categ" class="form-control">
+                        
+                    <% categories.forEach(category=>{ %>
+                        <option value="<%= category.title %>"><%= category.title %></option>
+                    <% }) %>
+                    </select>
                     <label for="body">Corpo do post</label>
                     <textarea class="form-control" name="body" id="article" placeholder="Escreva seu artigo..." rows="3"></textarea>
                     <br>
