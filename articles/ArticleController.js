@@ -24,11 +24,13 @@ router.get('/admin/article/new', (req, res)=>{
 router.post('/admin/article/new', (req, res)=>{
     const title = req.body.title;
     const body = req.body.body;
+    const category = req.body.category;
 
     if(title!=null && body!=null){
         Article.create({
             title:title,
             slug:slugify(title),
+            categoryId:category,
             body:body
         }).then(()=>{
             res.redirect('/articles');

@@ -14,11 +14,12 @@
                     <br>
                     <label for="categ">Categoria do post</label>
                     <select name="category" id="categ" class="form-control">
-                        
+
                     <% categories.forEach(category=>{ %>
-                        <option value="<%= category.title %>"><%= category.title %></option>
+                        <option value="<%= category.id %>"><%= category.title %></option>
                     <% }) %>
                     </select>
+                    <br>
                     <label for="body">Corpo do post</label>
                     <textarea class="form-control" name="body" id="article" placeholder="Escreva seu artigo..." rows="3"></textarea>
                     <br>
@@ -33,7 +34,8 @@
 <script src="/tinymce/tinymce.min.js"></script>
 <script>
     tinymce.init({
-        selector:"#article",
+        language:'pt_BR',
+        selector:'#article',
         plugins: 
             'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons',
         toolbar: 'emoticons'
