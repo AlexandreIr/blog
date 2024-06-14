@@ -40,6 +40,21 @@ router.post('/admin/article/new', (req, res)=>{
     }
 });
 
+router.get('/articles/edit/:id', (req, res)=>{
+    const id = req.params.id;
+    Article.findByPk(id).then((art)=>{
+        const category = Category.findByPk(art.categoryId).then(cat=> {return cat});
+        if(art!=null){
+            res.render('admin/articles/edit', {
+                article: art,
+                category:category
+            });
+        } else {
+            res.redirect('/articles');
+        }
+    });
+});
+
 
 
 module.exports = router;
