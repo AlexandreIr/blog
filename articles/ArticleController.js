@@ -77,6 +77,19 @@ router.post('/articles/edit/:id', (req,res)=>{
     });
 });
 
+router.post('/articles/delete/:id', (req, res)=>{
+    const id = req.params.id;
+    if(!isNaN(id) && id!=null){
+        Article.destroy({
+            where:{
+                id:id
+            }
+        }).then(()=>{
+            res.redirect('/articles');
+        })
+    }
+})
+
 router.get('/articles/view/:id', (req, res)=>{
     const id = req.params.id;
     Article.findByPk(id).then(article=>{
