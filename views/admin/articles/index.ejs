@@ -26,7 +26,6 @@
                     <th>
                         <a href="/articles/edit/<%= article.id %>" class="btn btn-warning">Editar</a>
                         <form action="/articles/delete/<%= article.id %>" method="post" style="display: inline;" onsubmit="deleteConf(event, this)">
-                            <input type="hidden" value="<%= article.id %>" name="id">
                             <button class="btn btn-danger">Deletar</button>
                         </form>
                         <a href="/articles/view/<%= article.id %>" class="btn btn-primary">Ver</a>
