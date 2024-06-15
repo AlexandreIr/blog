@@ -7,7 +7,9 @@ const Category = require('../categories/Category');
 const { raw } = require('body-parser');
 
 router.get('/articles', (req, res)=>{
-    Article.findAll({raw:true}).then(art=>{
+    Article.findAll({
+        include:[{model:Category}]
+    }).then(art=>{
             res.render('./admin/articles/index', {
                 articles:art,
             });
