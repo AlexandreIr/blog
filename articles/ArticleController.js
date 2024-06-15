@@ -4,12 +4,13 @@ const Sequelize = require('sequelize');
 const slugify = require('slugify');
 const Article = require('./Article');
 const Category = require('../categories/Category');
+const { raw } = require('body-parser');
 
 router.get('/articles', (req, res)=>{
     Article.findAll({raw:true}).then(art=>{
-        res.render('./admin/articles/index', {
-            articles:art,
-        });
+            res.render('./admin/articles/index', {
+                articles:art,
+            });
     })
 })
 
@@ -43,17 +44,45 @@ router.post('/admin/article/new', (req, res)=>{
 router.get('/articles/edit/:id', (req, res)=>{
     const id = req.params.id;
     Article.findByPk(id).then((art)=>{
-        const category = Category.findByPk(art.categoryId).then(cat=> {return cat});
-        if(art!=null){
-            res.render('admin/articles/edit', {
-                article: art,
-                category:category
-            });
-        } else {
-            res.redirect('/articles');
-        }
+        const category = Category.findAll({raw:true}).then(categ=>{
+            if(art!=null){
+                res.render('admin/articles/edit', {
+                    article: art,
+                    categories:categ
+                });
+            } else {
+                res.redirect('/articles');
+            }
+        });
     });
 });
+router.post('/articles/edit/:id', (req,res)=>{
+    const id = req.params.id;
+    const title = req.body.title;
+    const body = req.body.article;
+    const category = req.body.category;
+    Article.update({
+        title:title,
+        slug:slugify(title),
+        body:body,
+        category:category
+    }, {
+        where:{
+            id:id
+        }
+    }).then(()=>{
+        res.redirect('/articles');
+    });
+});
+
+router.get('/articles/view/:id', (req, res)=>{
+    const id = req.params.id;
+    Article.findByPk(id).then(article=>{
+        res.render('admin/articles/read', {
+            article:article
+        });
+    });
+})
 
 
 
