@@ -87,12 +87,16 @@ router.post('/articles/delete/:id', (req, res)=>{
         }).then(()=>{
             res.redirect('/articles');
         })
-    }
-})
+    } 
+});
 
-router.get('/articles/view/:id', (req, res)=>{
-    const id = req.params.id;
-    Article.findByPk(id).then(article=>{
+router.get('/:slug', (req, res)=>{
+    const slug = req.params.slug;
+    Article.findOne({
+        where:{
+            slug:slug
+        }
+    }).then(article=>{
         res.render('admin/articles/read', {
             article:article
         });

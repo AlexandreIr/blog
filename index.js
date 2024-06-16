@@ -28,7 +28,14 @@ app.use('/', CategoryController);
 app.use('/', ArticleController);
 
 app.get('/', (req, res)=>{
-    res.render('index');
+    Article.findAll({
+        include:[{model:Category}],
+        order:[['id', 'DESC']]
+    }).then(art=>{
+        res.render('index', {
+            articles:art
+        });
+    })
 });
 
 app.listen(port, ()=>{
