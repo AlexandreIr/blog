@@ -20,12 +20,16 @@
                     <select name="category" id="category" class="form-control">
                         <% categories.forEach(category=>{ %>
                             <% if(category.id == article.categoryId){ %>
+                                <option value="<%= category.id %>" selected><%= category.title %></option>
+                            <% } else {%>
                                 <option value="<%= category.id %>"><%= category.title %></option>
+
                             <% } %>
                         <% }) %>
                     </select>
                     <br><br>
                     <textarea name="article" id="article"><%= article.body %></textarea>
+                    <br>
                     <button class="btn btn-primary">Atualizar</button>
                 </form>
             </div>

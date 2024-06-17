@@ -4,6 +4,12 @@
     </a>
 
     <ul class="navbar-nav mx-3">
-        
+        <% categories.forEach(category=>{ %>
+            <li class="nav-item">
+                <a href="/category/<%= category.slug %>" class="nav-link">
+                    <%= category.title %>
+                </a>
+            </li>
+        <% }) %>
     </ul>
 </nav>
