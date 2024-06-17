@@ -8,6 +8,7 @@ const ArticleController = require('./articles/ArticleController');
 
 const Category = require('./categories/Category');
 const Article = require('./articles/Article');
+const { where } = require('sequelize');
 
 const port = 8080;
 
@@ -32,12 +33,37 @@ app.get('/', (req, res)=>{
         include:[{model:Category}],
         order:[['id', 'DESC']]
     }).then(art=>{
-        res.render('index', {
-            articles:art
-        });
+        Category.findAll().then(categories=>{
+            res.render('index', {
+                articles:art,
+                categories:categories
+            });
+        })
     })
 });
 
+app.get('/category/:slug', (req, res)=>{
+    const slug = req.params.slug;
+    Category.findOne({
+        where:{
+            slug:slug
+        }, 
+        include:[{model:Article}]
+    }).then(category=>{
+        if(category!=null){
+            Category.findAll().then(categories=>{
+                res.render('index',{
+                    articles:category.articles,
+                    categories:categories
+                });
+            })
+        }
+    }).catch(err=>{
+        res.redirect('/');
+        console.log(err);
+    });
+})
+
 app.listen(port, ()=>{
-    console.log(`Servidor rodando na porta ${port}`);
+    console.log(`Servidor rodando em http://localhost:${port}`);
 });
