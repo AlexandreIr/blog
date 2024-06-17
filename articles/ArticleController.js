@@ -97,9 +97,12 @@ router.get('/:slug', (req, res)=>{
             slug:slug
         }
     }).then(article=>{
-        res.render('admin/articles/read', {
-            article:article
-        });
+        Category.findAll().then(categories=>{
+            res.render('admin/articles/read', {
+                article:article,
+                categories:categories
+            });
+        })
     });
 })
 
