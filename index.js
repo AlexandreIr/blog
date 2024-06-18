@@ -31,7 +31,7 @@ app.use('/', ArticleController);
 app.get('/', (req, res)=>{
     Article.findAll({
         include:[{model:Category}],
-        order:[['id', 'DESC']]
+        limit:2
     }).then(art=>{
         Category.findAll().then(categories=>{
             res.render('index', {
@@ -62,7 +62,7 @@ app.get('/category/:slug', (req, res)=>{
         res.redirect('/');
         console.log(err);
     });
-})
+});
 
 app.listen(port, ()=>{
     console.log(`Servidor rodando em http://localhost:${port}`);
