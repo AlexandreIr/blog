@@ -60,14 +60,13 @@ router.get('/articles/edit/:id', (req, res)=>{
 });
 router.post('/articles/edit/:id', (req,res)=>{
     const id = req.params.id;
-    const title = req.body.title;
-    const body = req.body.article;
-    const category = req.body.category;
+    const {title, article, category} = req.body
+    
     Article.update({
         title:title,
         slug:slugify(title),
-        body:body,
-        category:category
+        body:article,
+        categoryId:category
     }, {
         where:{
             id:id
@@ -104,7 +103,40 @@ router.get('/:slug', (req, res)=>{
             });
         })
     });
-})
+});
+
+router.get('/articles/page/:num', (req, res)=>{
+    const page = req.params.num;
+    let offset = 0;
+    if(!isNaN(page)&&page>1){
+        offset = parseInt(page);
+    }
+    if(page>2){
+        offset = parseInt(page)+1;
+    }
+
+    Article.findAndCountAll({
+        limit:2,
+        offset: offset
+    }).then(articles=>{
+        let next = true;
+        if(offset+1>=articles.count){
+            next=false;
+        }
+        const result = {
+            next:next,
+            offset:offset,
+            articles:articles
+        }
+
+        Category.findAll().then(categories=>{
+            res.render('admin/articles/page',{
+                result:result,
+                categories:categories
+            });
+        })
+    });
+});
 
 
 
