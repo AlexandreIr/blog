@@ -5,9 +5,11 @@ const connection = require('./db/db');
 
 const CategoryController = require('./categories/CategoryController');
 const ArticleController = require('./articles/ArticleController');
+const UsersController = require('./user/UsersController');
 
 const Category = require('./categories/Category');
 const Article = require('./articles/Article');
+const User = require('./user/User');
 const { where } = require('sequelize');
 
 const port = 8080;
@@ -27,6 +29,7 @@ connection.authenticate().then(()=>{
 
 app.use('/', CategoryController);
 app.use('/', ArticleController);
+app.use('/', UsersController);
 
 app.get('/', (req, res)=>{
     Article.findAll({
