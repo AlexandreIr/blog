@@ -2,11 +2,12 @@ const express = require('express');
 const router = express.Router();
 const User = require('./User');
 const bcrypt = require('bcryptjs');
+const { where } = require('sequelize');
 
 
 router.get('/admin/users',(req, res)=>{
     User.findAll().then(users=>{
-        res.json(users);
+        res.render('admin/users/index', {users:users});
     });
 });
 
@@ -36,6 +37,19 @@ router.post('/admin/users/create', (req, res)=>{
             res.redirect('/admin/users/create');
         } 
     })
+});
+
+router.post('/admin/users/delete/:id', (req, res)=>{
+    const id = req.params.id;
+    if(id!=null && !isNaN(id)){
+        User.destroy({
+            where:{
+                id:id
+            }
+        }).then(()=>{
+            res.redirect('/admin/users');
+        })
+    }
 });
 
 module.exports = router;
