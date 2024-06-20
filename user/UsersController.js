@@ -16,14 +16,25 @@ router.get('/admin/users/create', (req, res)=>{
 
 router.post('/admin/users/create', (req, res)=>{
     const {name,email,password} = req.body;
-    const salt = bcrypt.genSaltSync(11);
-    const hash = bcrypt.hashSync(password, salt);
-    User.create({
-        name:name,
-        email:email,
-        password:hash
-    }).then(()=>{
-        res.redirect('/admin/users');
+
+    User.findOne({
+        where:{
+            email:email
+        }
+    }).then(u=>{
+        if(u==null){
+            const salt = bcrypt.genSaltSync(11);
+            const hash = bcrypt.hashSync(password, salt);
+            User.create({
+                name:name,
+                email:email,
+                password:hash
+            }).then(()=>{
+                res.redirect('/admin/users');
+            })
+        } else {
+            res.redirect('/admin/users/create');
+        } 
     })
 });
 
