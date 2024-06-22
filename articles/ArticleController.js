@@ -5,8 +5,9 @@ const slugify = require('slugify');
 const Article = require('./Article');
 const Category = require('../categories/Category');
 const { raw } = require('body-parser');
+const adminAuth = require('../middlewares/adminAuth');
 
-router.get('/articles', (req, res)=>{
+router.get('/articles', adminAuth ,(req, res)=>{
     Article.findAll({
         include:[{model:Category}]
     }).then(art=>{
@@ -16,7 +17,7 @@ router.get('/articles', (req, res)=>{
     })
 })
 
-router.get('/admin/article/new', (req, res)=>{
+router.get('/admin/article/new',adminAuth ,(req, res)=>{
     Category.findAll({raw:true}).then(cat=>{
         res.render('./admin/articles/new', {
             categories:cat
@@ -24,7 +25,7 @@ router.get('/admin/article/new', (req, res)=>{
     })
 });
 
-router.post('/admin/article/new', (req, res)=>{
+router.post('/admin/article/new',adminAuth ,(req, res)=>{
     const title = req.body.title;
     const body = req.body.body;
     const category = req.body.category;
@@ -43,7 +44,7 @@ router.post('/admin/article/new', (req, res)=>{
     }
 });
 
-router.get('/articles/edit/:id', (req, res)=>{
+router.get('/articles/edit/:id',adminAuth ,(req, res)=>{
     const id = req.params.id;
     Article.findByPk(id).then((art)=>{
         const category = Category.findAll({raw:true}).then(categ=>{
@@ -58,7 +59,7 @@ router.get('/articles/edit/:id', (req, res)=>{
         });
     });
 });
-router.post('/articles/edit/:id', (req,res)=>{
+router.post('/articles/edit/:id',adminAuth ,(req,res)=>{
     const id = req.params.id;
     const {title, article, category} = req.body
     
@@ -76,7 +77,7 @@ router.post('/articles/edit/:id', (req,res)=>{
     });
 });
 
-router.post('/articles/delete/:id', (req, res)=>{
+router.post('/articles/delete/:id', adminAuth,(req, res)=>{
     const id = req.params.id;
     if(!isNaN(id) && id!=null){
         Article.destroy({

@@ -27,7 +27,7 @@ router.post('/login', (req, res)=>{
                     name:user.name,
                     email:user.email,
                 }
-                res.json(req.session.user);
+                res.redirect('/articles');
             } else {
                 res.redirect('/login');
  
