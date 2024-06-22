@@ -1,8 +1,42 @@
 const express = require('express');
+const Categoies = require('../categories/Category');
 const router = express.Router();
 const User = require('./User');
 const bcrypt = require('bcryptjs');
 const { where } = require('sequelize');
+
+
+router.get('/login', (req, res)=>{
+    Categoies.findAll().then((categories)=>{
+        res.render('admin/users/login', {categories:categories});
+    })
+});
+
+router.post('/login', (req, res)=>{
+    const {email,password} = req.body;
+    User.findOne({
+        where:{
+            email:email,
+        }
+    }).then(user=>{
+        if(user!=null){
+            const verification = bcrypt.compareSync(password, user.password);
+            if(verification){
+                req.session.user = {
+                    id:user.id,
+                    name:user.name,
+                    email:user.email,
+                }
+                res.json(req.session.user);
+            } else {
+                res.redirect('/login');
+ 
+            }
+        } else {
+            res.redirect('/');
+        }
+    })
+})
 
 
 router.get('/admin/users',(req, res)=>{

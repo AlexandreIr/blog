@@ -89,7 +89,7 @@ router.post('/articles/delete/:id', (req, res)=>{
     } 
 });
 
-router.get('/:slug', (req, res)=>{
+router.get('/article/:slug', (req, res)=>{
     const slug = req.params.slug;
     Article.findOne({
         where:{

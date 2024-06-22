@@ -6,7 +6,7 @@
         <div class="mt-4 p-5 bg-secondary text-white rounded">
             <h1>Bem vindo</h1>
             <p>Isto é um jumbotron e serve para chamar sua atenção ao meu blog, seja muito bem vindo</p>
-          </div>
+        </div>
         <br>
         <% articles.forEach(article=>{ %>
             <div class="card">
@@ -15,7 +15,7 @@
                     <br>
                 </div>
                 <div class="card-body">
-                    <a href="/<%= article.slug %>" class="btn btn-success">Ler artigo</a>
+                    <a href="/article/<%= article.slug %>" class="btn btn-success">Ler artigo</a>
                 </div>
             </div>
             <br>
