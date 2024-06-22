@@ -17,6 +17,11 @@ const port = 8080;
 
 app.set('view engine', 'ejs');
 
+app.use(session({
+    secret:'ajdfhiasufsa6g45645sd1g2dfs85gsdffssdfg',
+    cookie:{maxAge: 30*1000}
+}));
+
 app.use(express.static('public'));
 
 app.use(bodyParser.urlencoded({extended:false}));
@@ -31,6 +36,20 @@ connection.authenticate().then(()=>{
 app.use('/', CategoryController);
 app.use('/', ArticleController);
 app.use('/', UsersController);
+
+app.get('/session', (req, res)=>{
+    req.session.user={
+        name:'Alexandre',
+        email:'alex.silva250@hotmail.com',
+        password:'123456789'
+    }
+});
+
+app.get('/reader', (req, res)=>{
+    res.json({
+        user:req.session.user.name
+    });
+});
 
 app.get('/', (req, res)=>{
     Article.findAll({
