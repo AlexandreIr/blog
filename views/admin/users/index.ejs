@@ -4,7 +4,7 @@
     <div class="container">
         <br>
         <h2>Usuários</h2>
-        <a href="/admin/users/create" class="btn btn-success">Criar nova categoria</a>
+        <a href="/admin/users/create" class="btn btn-success">Criar novo usuário</a>
         <br><br>
         <table class="table">
             <thead>
@@ -34,7 +34,7 @@
 <script>
     function deleteConf(event, form){
         event.preventDefault();
-        let conf = confirm("Deseja realmente deletar esta categoria?");
+        let conf = confirm("Deseja realmente deletar este usuário?");
         if(conf){
             form.submit();
         }

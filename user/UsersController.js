@@ -1,6 +1,7 @@
 const express = require('express');
 const Categoies = require('../categories/Category');
 const router = express.Router();
+const adminAuth = require('../middlewares/adminAuth');
 const User = require('./User');
 const bcrypt = require('bcryptjs');
 const { where } = require('sequelize');
@@ -39,17 +40,17 @@ router.post('/login', (req, res)=>{
 })
 
 
-router.get('/admin/users',(req, res)=>{
+router.get('/admin/users',adminAuth,(req, res)=>{
     User.findAll().then(users=>{
         res.render('admin/users/index', {users:users});
     });
 });
 
-router.get('/admin/users/create', (req, res)=>{
+router.get('/admin/users/create',adminAuth, (req, res)=>{
     res.render('admin/users/create');
 });
 
-router.post('/admin/users/create', (req, res)=>{
+router.post('/admin/users/create',adminAuth, (req, res)=>{
     const {name,email,password} = req.body;
 
     User.findOne({
@@ -61,8 +62,8 @@ router.post('/admin/users/create', (req, res)=>{
             const salt = bcrypt.genSaltSync(11);
             const hash = bcrypt.hashSync(password, salt);
             User.create({
-                name:name,
-                email:email,
+                name,
+                email,
                 password:hash
             }).then(()=>{
                 res.redirect('/admin/users');
@@ -73,7 +74,7 @@ router.post('/admin/users/create', (req, res)=>{
     })
 });
 
-router.post('/admin/users/delete/:id', (req, res)=>{
+router.post('/admin/users/delete/:id',adminAuth, (req, res)=>{
     const id = req.params.id;
     if(id!=null && !isNaN(id)){
         User.destroy({
@@ -81,12 +82,16 @@ router.post('/admin/users/delete/:id', (req, res)=>{
                 id:id
             }
         }).then(()=>{
-            res.redirect('/admin/users');
+            if(req.session.user.id!=id){
+                res.redirect('/admin/users');
+            } else {
+                res.redirect('/logout');
+            }
         })
     }
 });
 
-router.get('/logout', (req, res)=>{
+router.get('/logout',adminAuth, (req, res)=>{
     req.session.user=undefined;
     res.redirect('/');
 })

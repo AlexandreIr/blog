@@ -9,7 +9,7 @@
                 <h2>Cadastro de usuário</h2>
             </div>
             <div class="card-body">
-                <form method="post" action="/admin/users/create">
+                <form method="post" action="/admin/users/create" onsubmit="success(event,this)">
                     <label for="name">Nome do usuário:</label>
                     <input type="text" name="name" id="name" placeholder="Nome do usuário" class="form-control">
                     <br>
@@ -26,3 +26,11 @@
     </div>
 </body>
 <%- include('../../partials/footer') %>
+
+<script>
+    function success(event, form){
+        event.preventDefault();
+        alert('Usuário criado com sucesso!');
+        form.submit();
+    }
+</script>
