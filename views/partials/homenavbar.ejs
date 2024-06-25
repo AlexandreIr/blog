@@ -5,12 +5,13 @@
             AFBlog
         </a>
         <% categories.forEach(category=>{ %>
-            <li class="nav-item">
-                <a href="/category/<%= category.slug %>" class="nav-link">
-                    <%= category.title %>
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a href="/category/<%= category.slug %>" class="nav-link">
+                        <%= category.title %>
+                    </a>
+                </li>
         <% }) %>
+        </select>
     </ul>
     <a href="/login" class="btn btn-success nav-item mx-5">Login</a>
 </nav>
