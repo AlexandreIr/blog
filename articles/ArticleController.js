@@ -109,25 +109,24 @@ router.get('/article/:slug', (req, res)=>{
 router.get('/articles/page/:num', (req, res)=>{
     const page = req.params.num;
     let offset = 0;
-    if(!isNaN(page)&&page>1){
-        offset = parseInt(page);
-    }
-    if(page>2){
-        offset = parseInt(page)+1;
+    if(isNaN(page)||page==1){
+        offset=0;
+    } else{
+        offset = (parseInt(page)-1)*4;    
     }
 
     Article.findAndCountAll({
-        limit:2,
-        offset: offset
+        limit:4,
+        offset,
     }).then(articles=>{
         let next = true;
-        if(offset+1>=articles.count){
+        if(offset*4>=articles.count){
             next=false;
         }
         const result = {
             page:parseInt(page),
-            next:next,
-            articles:articles
+            next,
+            articles
         }
 
         Category.findAll().then(categories=>{

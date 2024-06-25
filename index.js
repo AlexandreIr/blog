@@ -40,7 +40,7 @@ app.use('/', UsersController);
 app.get('/', (req, res)=>{
     Article.findAll({
         include:[{model:Category}],
-        limit:2
+        limit:4
     }).then(art=>{
         Category.findAll().then(categories=>{
             res.render('index', {
@@ -63,7 +63,7 @@ app.get('/category/:slug', (req, res)=>{
             Category.findAll().then(categories=>{
                 res.render('index',{
                     articles:category.articles,
-                    categories:categories
+                    categories
                 });
             })
         }
