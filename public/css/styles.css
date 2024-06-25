@@ -4,3 +4,10 @@ body{
 textarea{
     resize: none;
 }
+.error{
+    border-color: red;
+}
+#emailErr, #passErr{
+    display: none; 
+    color: red;
+}

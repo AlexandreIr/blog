@@ -9,12 +9,13 @@
                 <h2>Login</h2>
             </div>
             <div class="card-body">
-                <form method="post" action="/login">
+                <form method="post" action="/login" onsubmit="check(event, this)">
                     <label for="email">E-mail do usuário:</label>
                     <input type="email" name="email" id="email" placeholder="Email do usuário" class="form-control">
-                    <br>
+                    <p id="emailErr">Email inválido</p>
                     <label for="password">Senha do usuário</label>
                     <input type="password" name="password" id="password" placeholder="Senha do usuário" class="form-control">
+                    <p id="passErr">Senha inválida</p>
                     <br>
                     <button class="btn btn-primary">Cadastrar</button>
                 </form>
@@ -23,3 +24,29 @@
     </div>
 </body>
 <%- include('../../partials/footer') %>
+
+<script>
+    function check(event, form){
+        event.preventDefault();
+        const email = document.getElementById('email');
+        const pass = document.getElementById('password');
+        email.classList.remove('error');
+        document.getElementById('emailErr').style.display = 'none';
+        pass.classList.remove('error');
+        document.getElementById('passErr').style.display='none';
+
+        if(email.value=="" || pass.value==""){
+            if(email.value==""){
+                email.classList.add('error');
+                document.getElementById('emailErr').style.display = 'block';
+            }
+    
+            if(pass.value==""){
+                pass.classList.add('error');
+                document.getElementById('passErr').style.display='block'
+            }
+        } else {
+            form.submit();
+        }
+    }
+</script>
