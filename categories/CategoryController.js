@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const category = require('./Category');
+const article = require('../articles/Article');
 const slugify = require('slugify');
 const { raw } = require('body-parser');
 const { where } = require('sequelize');
@@ -36,6 +37,16 @@ router.post('/categories/delete/',adminAuth,(req, res)=>{
     const id = req.body.id;
     if(id!=null){
         if(!isNaN(id)){
+            article.findAll({
+                where:{
+                    categoryId:id
+                }
+            }).then(articles=>{
+                articles.forEach(art=>{
+                    art.destroy();
+                })
+            });
+            
             category.destroy({
                 where:{
                     id:id
