@@ -31,11 +31,12 @@ router.post('/login', (req, res)=>{
                 res.redirect('/articles');
             } else {
                 res.redirect('/login');
- 
             }
         } else {
-            res.redirect('/');
+            res.redirect('/login');
         }
+    }).catch(err=>{
+        console.log(err);
     })
 })
 
