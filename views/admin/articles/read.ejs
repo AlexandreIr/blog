@@ -1,6 +1,10 @@
 <%- include('../../partials/header') %>
 <body>
-    <%- include('../../partials/homenavbar') %>
+    <% if(!user) { %>
+        <%- include('../../partials/homenavbar') %>
+    <% } else { %>
+        <%- include('../../partials/navbar') %>
+    <% } %>
     <div class="container">
         <br>
         <a href="javascript:history.back()" class="btn btn-primary">&#129092; Voltar</a>
