@@ -12,7 +12,7 @@ router.get('/articles', adminAuth ,(req, res)=>{
         include:[{model:Category}]
     }).then(art=>{
             res.render('./admin/articles/index', {
-                articles:art,
+                articles:art
             });
     })
 })
@@ -100,7 +100,8 @@ router.get('/article/:slug', (req, res)=>{
         Category.findAll().then(categories=>{
             res.render('admin/articles/read', {
                 article:article,
-                categories:categories
+                categories:categories,
+                user:req.session.user
             });
         })
     });

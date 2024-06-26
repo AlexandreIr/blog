@@ -28,7 +28,7 @@
                         <form action="/articles/delete/<%= article.id %>" method="post" style="display: inline;" onsubmit="deleteConf(event, this)">
                             <button class="btn btn-danger">Deletar</button>
                         </form>
-                        <a href="/<%= article.slug %>" class="btn btn-primary">Ver</a>
+                        <a href="/article/<%= article.slug %>" class="btn btn-primary">Ver</a>
                     </th>
                 </tr>
                 <% }) %>

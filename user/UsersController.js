@@ -10,7 +10,7 @@ const { where } = require('sequelize');
 router.get('/login', (req, res)=>{
     Categoies.findAll().then((categories)=>{
         res.render('admin/users/login', {categories:categories});
-    })
+    });
 });
 
 router.post('/login', (req, res)=>{

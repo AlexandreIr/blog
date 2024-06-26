@@ -38,7 +38,7 @@
 <script>
     function deleteConf(event, form){
         event.preventDefault();
-        let conf = confirm("Deseja realmente deletar esta categoria?");
+        let conf = confirm("Deseja realmente deletar esta categoria? Todos os artigos associados a ela serão apagados também");
         if(conf){
             form.submit();
         }
