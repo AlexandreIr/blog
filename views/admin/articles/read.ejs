@@ -17,5 +17,30 @@
                 <%- article?.body %>
             </div>
         </div>
+        <hr>
+        <br>
+        <h2>Comentários:</h2>
+        <br>
+        <form action="" method="post">
+            
+            <label for="name">Nome</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Digite aqui seu nome">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Digite aqui seu e-mail">
+            <label for="commentBody">Comentário</label>
+            <textarea name="commentBody" id="commentBody" class="form-control" rows="1" placeholder="Digite seu comentário aqui"></textarea>
+        </form>
+    </div>
 </body>
     <%- include('../../partials/footer') %>
+
+<script src="/tinymce/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        language:'pt_BR',
+        selector:'#commentBody',
+        plugins: 
+            'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons',
+        toolbar: 'emoticons'
+    });
+</script>
