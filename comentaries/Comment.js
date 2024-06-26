@@ -2,7 +2,7 @@ const sequelize = require('sequelize');
 const connection = require ('../db/db');
 const Article = require('../articles/Article');
 
-const Comment = define('comentaries', {
+const Comment = connection.define('comentaries', {
     name:{
         type:sequelize.STRING,
         allowNull:false
@@ -10,7 +10,7 @@ const Comment = define('comentaries', {
         type:sequelize.STRING,
         allowNull:false
     },body:{
-        type:sequelize.STRING,
+        type:sequelize.TEXT,
         allowNull:false
     }
 });

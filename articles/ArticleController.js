@@ -4,6 +4,7 @@ const Sequelize = require('sequelize');
 const slugify = require('slugify');
 const Article = require('./Article');
 const Category = require('../categories/Category');
+const Comment = require('../comentaries/comment');
 const { raw } = require('body-parser');
 const adminAuth = require('../middlewares/adminAuth');
 
@@ -26,9 +27,7 @@ router.get('/admin/article/new',adminAuth ,(req, res)=>{
 });
 
 router.post('/admin/article/new',adminAuth ,(req, res)=>{
-    const title = req.body.title;
-    const body = req.body.body;
-    const category = req.body.category;
+    const {title, body, category} = req.body;
 
     if(title!=null && body!=null){
         Article.create({
@@ -97,15 +96,35 @@ router.get('/article/:slug', (req, res)=>{
             slug:slug
         }
     }).then(article=>{
-        Category.findAll().then(categories=>{
-            res.render('admin/articles/read', {
-                article:article,
-                categories:categories,
-                user:req.session.user
-            });
+        Comment.findAll({
+            where:{
+                articleId:article.id
+            }
+        }).then(comments=>{
+            Category.findAll().then(categories=>{
+                res.render('admin/articles/read', {
+                    article,
+                    categories,
+                    user:req.session.user,
+                    comments
+                });
+            })
         })
     });
 });
+
+router.post('/article/:slug/comment', (req, res)=>{
+    const slug = req.params.slug;
+    const {name, email, commentBody, id} = req.body;
+        Comment.create({    
+            name,
+            email,
+            body:commentBody,
+            articleId:id
+        }).then(()=>{
+            res.redirect(`/article/${slug}`);
+        });
+})
 
 router.get('/articles/page/:num', (req, res)=>{
     const page = req.params.num;

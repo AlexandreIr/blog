@@ -19,16 +19,31 @@
         </div>
         <hr>
         <br>
-        <h2>Comentários:</h2>
+        <h2>Comentários</h2>
         <br>
-        <form action="" method="post">
-            
+        <% comments.forEach(comment=>{ %>
+            <div class="card">
+                <div class="card-header">
+                    <h4><%= comment.name %></h4>
+                </div>
+                <div class="card-body">
+                    <p><%- comment.body %></p>
+                </div>
+            </div>
+            <br>
+        <% }) %>
+        <br>
+        <h2>Deixe seu comentário</h2>
+        <form action="/article/<%= article.slug %>/comment" method="POST">
+            <input type="hidden" name="id" value="<%= article.id %>">
             <label for="name">Nome</label>
             <input type="text" id="name" name="name" class="form-control" placeholder="Digite aqui seu nome">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" class="form-control" placeholder="Digite aqui seu e-mail">
             <label for="commentBody">Comentário</label>
             <textarea name="commentBody" id="commentBody" class="form-control" rows="1" placeholder="Digite seu comentário aqui"></textarea>
+            <br>
+            <button class="btn btn-primary">Comentar</button>
         </form>
     </div>
 </body>

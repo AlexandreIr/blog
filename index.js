@@ -11,6 +11,7 @@ const UsersController = require('./user/UsersController');
 const Category = require('./categories/Category');
 const Article = require('./articles/Article');
 const User = require('./user/User');
+const Comment = require('./comentaries/comment');
 const { where } = require('sequelize');
 
 const port = 8080;
